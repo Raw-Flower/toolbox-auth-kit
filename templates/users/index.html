@@ -1,26 +1,12 @@
-{% extends 'users/base.html' %}
+{% extends 'users/main_base.html' %}
 {% block title %}Home{% endblock title %}
 {% block body %}
-<div class='row mt-2'>
-    <div class='col-3'>
-        <div class="card">
-            <div class="card-header">Main menu</div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><a href="#" class="card-link">Home</a></li>
-                <li class="list-group-item"><a href="#" class="card-link">Register</a></li>
-            </ul>
-            <div class="card-footer"><span class='fw-bold'>Already have an account? </span><a href="#" class="card-link">Click here!</a></div>
-        </div>
-    </div>
-    <div class='col-9'>
-        <div class="card">
-            <div class="card-header">Home page</div>
-            <div class="card-body">
-                <h5 class="card-title">Welcome!</h5>
-                <p class="card-text">Please look around and test the different options that the app have to offer. Good luck :)</p>
-                <a href="#" class="btn btn-primary">Lest go!</a>
-            </div>
-        </div>
+<div class="card">
+    <div class="card-header">Home</div>
+    <div class="card-body">
+        <h5 class="card-title">Welcome!</h5>
+        <p class="card-text">Please look around and test the different options that the app have to offer. Thank you :)</p>
+        <a href="#" class="btn btn-primary">Lest go!</a>
     </div>
 </div>
 {% endblock body %}
