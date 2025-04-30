@@ -16,7 +16,7 @@
                         <li class="list-group-item"><a href='{% url "users:home" %}' class="card-link">Home</a>{% if active_page == 'home' %} <span class="badge bg-primary">You're here!</span>{% endif %}</li>
                         <li class="list-group-item"><a href='{% url "users:user_creation" %}' class="card-link">Register</a>{% if active_page == 'user_creation' %} <span class="badge bg-primary">You're here!</span>{% endif %}</li>
                     </ul>
-                    <div class="card-footer"><span class='fw-bold'>Already have an account? </span><a href="#" class="card-link">Click here!</a></div>
+                    <div class="card-footer"><span class='fw-bold'>Already have an account? </span><a href='{% url "users:login" %}' class="card-link">Click here!</a></div>
                 </div>
             </div>
             <div class='col-9'>

@@ -13,14 +13,14 @@ class UserProfile(models.Model):
     contact_phone = models.CharField(verbose_name='Contact phone', max_length=100)
     address = models.TextField(verbose_name='Address', max_length=100)
     about_me = models.TextField(verbose_name='Bio', max_length=100)
-    status = models.IntegerField(verbose_name='Status', choices=StatusOptions.choices)
+    status = models.IntegerField(verbose_name='Status', choices=StatusOptions.choices, default=StatusOptions.enable)
     createtime = models.DateTimeField(verbose_name='Createtime', auto_now_add=True)
     updatetime = models.DateTimeField(verbose_name='Updatetime', auto_now=True)
     
     class Meta:
-        verbose_name = "User Profile"
-        verbose_name_plural = "User Profile"
-        ordering = ['user']
+        verbose_name = "Profile"
+        verbose_name_plural = "Profiles"
+        ordering = ['id']
 
     def __str__(self):
         return str(self.id)
