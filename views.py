@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView
+from django.contrib.auth.views import LoginView
+from django.contrib import messages
 from .forms import UserCreationForm
-from .utils import split_forms, cleanAttrs
-from .models import UserProfile
+from .utils import split_forms, saveModelsInfo
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -20,22 +21,29 @@ class UserCreationView(FormView):
     success_url = reverse_lazy('users:home')
     
     def get_context_data(self, **kwargs):
-        users_forms = split_forms(self.get_form())
+        user_forms = split_forms(self.get_form())
         context = super().get_context_data(**kwargs)
         context['active_page'] = 'user_creation'
-        context['basic_form'] = users_forms[0]
-        context['profile_form'] = users_forms[1]
+        context['basic_form'] = user_forms.get('basic_form')
+        context['profile_form'] = user_forms.get('profile_form')
         return context
-        
+
     #Handle save function
     def form_valid(self, form):
-        print(form.cleaned_data)
-        user_fields = ['username','password','first_name','last_name']
-        profile_fields = cleanAttrs([i.name for i in UserProfile._meta.get_fields()]) 
-        print(profile_fields)
-        return ''
-        #return super().form_valid(form)
+        result = saveModelsInfo(form.cleaned_data)
+        if result:
+            messages.success(request=self.request, message='You have been successfully registered.')
+            return super().form_valid(form)
+        messages.error(request=self.request, message='A critical error was found while saving the user data, please contact with the system administrator.')
+        return self.render_to_response(self.get_context_data(form=form))
     
+    def form_invalid(self, form):
+        messages.error(request=self.request, message='Your data contains some errors. Please check and try again.')
+        return self.render_to_response(self.get_context_data(form=form))
+        
     #Handle form validation 
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
+    
+class LoginView(LoginView):
+    template_name = 'users/login.html'

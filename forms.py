@@ -39,9 +39,9 @@ class UserCreationForm(forms.Form):
         validators=[
             ProhibitNullCharactersValidator,
             MinLengthValidator(3),
-            MaxLengthValidator(25),
+            MaxLengthValidator(50),
             RegexValidator(
-                regex='^[a-zA-Z]+$',
+                regex='^[a-zA-Z ]+$',
                 message=_('This field contains unvalid characters.'),
                 code='invalid_characters'
             )
@@ -59,7 +59,7 @@ class UserCreationForm(forms.Form):
             MinLengthValidator(3),
             MaxLengthValidator(25),
             RegexValidator(
-                regex='^[a-zA-Z]+$',
+                regex='^[a-zA-Z ]+$',
                 message=_('This field contains unvalid characters.'),
                 code='invalid_characters'
             )
@@ -151,7 +151,7 @@ class UserCreationForm(forms.Form):
             MinLengthValidator(10),
             MaxLengthValidator(50),
             RegexValidator(
-                regex='^[a-zA-Z, ]+$',
+                regex='^[a-zA-Z, /]+$',
                 message=_('This field contains unvalid characters.'),
                 code='invalid_characters'
             )
@@ -167,7 +167,7 @@ class UserCreationForm(forms.Form):
         validators=[
             ProhibitNullCharactersValidator,
             MinLengthValidator(5),
-            MaxLengthValidator(10),
+            MaxLengthValidator(30),
             RegexValidator(
                 regex='^[+0-9 -]+$',
                 message=_('This field contains unvalid characters.'),
@@ -229,6 +229,8 @@ class UserCreationForm(forms.Form):
                 code='password_match'
             )
         return password_repeat
+    
+    
     
     def clean_username(self):
         not_allow_username = ['root','admin','administrator','administrador','system','admon']
