@@ -1,0 +1,17 @@
+{% extends 'users/base/standard_base.html' %}
+{% load custom_tags %}
+{% block title %}Log-out{% endblock title %}
+{% block content %}
+<div class="row">
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center mt-2">
+                    <p>You have been logout successfully.</p>
+                    <a href='{% url "users:home" %}'>Take me back home!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

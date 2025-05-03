@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    {% include 'users/includes/bootstrap_css.html' %}
+</head>
+<body>
+    <div class='container-fluid mt-2'>
+        <div class='row'>
+            <div class='col-3'>
+                <div class="card">
+                    <div class="card-header">Navigation options</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href='{% url "users:admin_home" %}' class="card-link">Home</a></li>
+                        <li class="list-group-item"><a href='#' class="card-link">Profile details</a></li>
+                        <li class="list-group-item"><a href='{% url "users:admin_confirm_logout" %}' class="card-link">log out</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class='col-9'>
+                {% block body %}
+                {% endblock body %}
+            </div>
+        </div>
+    </div>
+{% include 'users/includes/bootstrap_js.html' %}
+</body>
+</html>
