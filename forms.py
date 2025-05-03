@@ -1,8 +1,10 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.validators import MaxLengthValidator,MinLengthValidator,EmailValidator,RegexValidator,ProhibitNullCharactersValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 import re
 
 def checkPasswordNumber(value):
@@ -230,8 +232,6 @@ class UserCreationForm(forms.Form):
             )
         return password_repeat
     
-    
-    
     def clean_username(self):
         not_allow_username = ['root','admin','administrator','administrador','system','admon']
         username2check = self.cleaned_data.get('username')
@@ -248,3 +248,36 @@ class UserCreationForm(forms.Form):
                         code='invalid_words'
                     )
         return username2check
+    
+class CustomAuthForm(AuthenticationForm):
+    username = forms.CharField(
+        label=_('Username'),
+        widget=forms.TextInput(
+            attrs={'class':'form-control'}
+        ),
+        validators=[
+            ProhibitNullCharactersValidator,
+            MaxLengthValidator(25),
+            RegexValidator(
+                regex='^[a-zA-Z0-9._-]+$',
+                message=_('This field contains invalid characters. Allowed characters are letters, numbers, period, underscore, and hyphen.'),
+                code='invalid_characters'
+            )
+        ]
+    )
+    
+    password = forms.CharField(
+        label=_('Password'),
+        widget=forms.PasswordInput(
+            attrs={'class':'form-control'}
+        ),
+        validators=[
+            ProhibitNullCharactersValidator,
+            MaxLengthValidator(25),
+            RegexValidator(
+                regex='^[a-zA-Z0-9._!@#$%&*-]+$',
+                message=_('This field contains invalid characters.\nAllowed characters are ! @ # $ % & * . _ - '),
+                code='invalid_characters'
+            )
+        ]
+    )

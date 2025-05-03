@@ -1,0 +1,15 @@
+{% extends 'users/base/admin_base.html' %}
+{% block title %}logout confim{% endblock title %}
+{% block body %}
+<div class="card">
+    <div class="card-header">Log-out confirmation</div>
+    <div class="card-body">
+        <h5 class="card-title">Are you sure to logout?</h5>
+        <form action='{% url "users:logout" %}' method='POST' novalidate>
+            {% csrf_token %}
+            <button class='btn btn-danger'>Yes, I'm sure</button>
+        </form>
+    </div>
+</div>
+{% endblock body %}
+
