@@ -14,7 +14,7 @@
                     <div class="card-header">Navigation options</div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href='{% url "users:admin_home" %}' class="card-link">Home</a></li>
-                        <li class="list-group-item"><a href='#' class="card-link">Profile details</a></li>
+                        <li class="list-group-item"><a href='{% url "users:user_settings" %}' class="card-link">User settings</a></li>
                         <li class="list-group-item"><a href='{% url "users:admin_confirm_logout" %}' class="card-link">log out</a></li>
                     </ul>
                 </div>

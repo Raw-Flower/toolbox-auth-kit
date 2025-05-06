@@ -1,16 +1,14 @@
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, FormView
-from django.views.decorators.cache import never_cache
-from django.utils.decorators import method_decorator
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import login as auth_login
-from .forms import UserCreationForm, CustomAuthForm
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from .forms import UserCreationForm, CustomAuthForm, UserProfileUpdateForm, UserNewPasswordForm
 from .utils import split_forms, saveModelsInfo
+from .mixins import NeverBrowserCache, SecureView
 
 # Create your views here.
-class HomeView(TemplateView):
+class HomeView(NeverBrowserCache, TemplateView):
     template_name = 'users/core/index.html'
     
     def get_context_data(self, **kwargs):
@@ -48,17 +46,22 @@ class UserCreationView(FormView):
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
     
-class CustomLoginView(LoginView):
+class CustomLoginView(NeverBrowserCache, LoginView):
     template_name='users/auth/login.html'
     form_class = CustomAuthForm
     success_url = reverse_lazy('users:admin_home')
+    
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            success_url = self.get_success_url()
+            return HttpResponseRedirect(success_url)
+        return super().dispatch(request, *args, **kwargs)
     
     def form_invalid(self, form):
         messages.error(request=self.request, message="Your username and password didn't match. Please try again.")
         return super().form_invalid(form)
 
-@method_decorator(never_cache, name='dispatch') 
-class CustomLogoutView(LoginRequiredMixin, LogoutView):
+class CustomLogoutView(SecureView, LogoutView):
     template_name='users/auth/logout.html'
     success_url = reverse_lazy('users:home')
     
@@ -66,8 +69,7 @@ class CustomLogoutView(LoginRequiredMixin, LogoutView):
         messages.success(request=self.request, message="You have been logout successfully.")
         return super().post(request, *args, **kwargs)
 
-@method_decorator(never_cache, name='dispatch')  
-class AdminIndexView(LoginRequiredMixin, TemplateView):
+class AdminIndexView(SecureView, TemplateView):
     template_name = 'users/admin/index.html'
     login_url = reverse_lazy('users:login')
     redirect_field_name = 'next'
@@ -77,8 +79,7 @@ class AdminIndexView(LoginRequiredMixin, TemplateView):
         context['active_page'] = 'admin_home'
         return context
 
-@method_decorator(never_cache, name='dispatch')
-class AdminLogoutConfirmView(LoginRequiredMixin, TemplateView):
+class AdminLogoutConfirmView(SecureView, TemplateView):
     template_name = 'users/admin/confirm_logout.html'
     login_url = reverse_lazy('users:login')
     redirect_field_name = 'next'
@@ -86,4 +87,32 @@ class AdminLogoutConfirmView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['active_page'] = 'admin_home'
+        return context
+    
+class AdminUserSettingsView(SecureView, TemplateView):
+    template_name = 'users/admin/user_settings.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_page'] = 'user_settings'
+        return context
+    
+class AdminUserProfileView(SecureView, TemplateView):
+    template_name = 'users/admin/user_profile.html'
+    form_class = UserProfileUpdateForm
+    success_url = reverse_lazy('users:admin_home')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_page'] = 'user_settings'
+        return context
+    
+class AdminUserNewPasswordView(SecureView, PasswordChangeView):
+    template_name = 'users/admin/user_new_password.html'
+    form_class = UserNewPasswordForm
+    success_url = reverse_lazy('users:admin_home')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_page'] = 'user_settings'
         return context

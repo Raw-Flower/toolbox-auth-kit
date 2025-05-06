@@ -1,0 +1,9 @@
+{% extends 'users/base/admin_base.html' %}
+{% block title %}Settings{% endblock title %}
+{% block body %}
+<div class="list-group">
+    <a href='{% url "users:user_profile" %}' class="list-group-item list-group-item-action"><span class='text-dark fw-normal'>Profile details</span></a>
+    <a href='{% url "users:user_new_password" %}' class="list-group-item list-group-item-action"><span class='text-dark fw-normal'>Set new password</span></a>
+</div>
+{% endblock body %}
+
