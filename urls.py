@@ -13,5 +13,8 @@ urlpatterns = [
 
     #ADMIN
     path(route='admin-home/',view=AdminIndexView.as_view(),name='admin_home'),
-    path(route='admin-confirm-logout/',view=AdminLogoutConfirmView.as_view(),name='admin_confirm_logout'),
+    path(route='confirm-logout/',view=AdminLogoutConfirmView.as_view(),name='admin_confirm_logout'),
+    path(route='user-settings/',view=AdminUserSettingsView.as_view(),name='user_settings'),
+    path(route='user-profile/',view=AdminUserProfileView.as_view(),name='user_profile'),
+    path(route='user-new-password/',view=AdminUserNewPasswordView.as_view(),name='user_new_password')
 ]

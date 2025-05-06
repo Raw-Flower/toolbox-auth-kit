@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.core.validators import MaxLengthValidator,MinLengthValidator,EmailValidator,RegexValidator,ProhibitNullCharactersValidator
 from django.core.exceptions import ValidationError
@@ -281,3 +281,9 @@ class CustomAuthForm(AuthenticationForm):
             )
         ]
     )
+    
+class UserProfileUpdateForm(forms.Form):
+    pass
+
+class UserNewPasswordForm(PasswordChangeForm):
+    pass
