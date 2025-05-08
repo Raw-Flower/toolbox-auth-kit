@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views.generic import TemplateView, FormView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from .forms import UserCreationForm, CustomAuthForm, UserNewPasswordForm
+from .forms import UserCreationForm
 from .utils import split_forms, saveModelsInfo, build_init_data, updateModelsInfo
 from .mixins import NeverBrowserCache, SecureView
 
@@ -48,7 +48,6 @@ class UserCreationView(FormView):
     
 class CustomLoginView(NeverBrowserCache, LoginView):
     template_name='users/auth/login.html'
-    form_class = CustomAuthForm
     success_url = reverse_lazy('users:admin_home')
     
     def dispatch(self, request, *args, **kwargs):
@@ -59,6 +58,7 @@ class CustomLoginView(NeverBrowserCache, LoginView):
     
     def form_invalid(self, form):
         messages.error(request=self.request, message="Your username and password didn't match. Please try again.")
+        print(form)
         return super().form_invalid(form)
 
 class CustomLogoutView(SecureView, LogoutView):
@@ -135,12 +135,19 @@ class AdminUserProfileView(SecureView, FormView):
             return self.form_valid(form)
         return self.form_invalid(form)
     
-class AdminUserNewPasswordView(SecureView, PasswordChangeView):
-    template_name = 'users/admin/user_new_password.html'
-    form_class = UserNewPasswordForm
+class AdminUserSetNewPasswordView(SecureView, PasswordChangeView):
+    template_name = 'users/admin/user_set_new_password.html'
     success_url = reverse_lazy('users:admin_home')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['active_page'] = 'user_settings'
         return context
+    
+    def form_valid(self, form):
+        messages.success(request=self.request, message='You have been updated your new password correctly.')
+        return super().form_valid(form)
+ 
+    def form_invalid(self, form):
+        messages.error(request=self.request, message='Your data contains some errors. Please check and try again.')
+        return self.render_to_response(self.get_context_data(form=form))
