@@ -16,5 +16,5 @@ urlpatterns = [
     path(route='confirm-logout/',view=AdminLogoutConfirmView.as_view(),name='admin_confirm_logout'),
     path(route='user-settings/',view=AdminUserSettingsView.as_view(),name='user_settings'),
     path(route='user-profile/',view=AdminUserProfileView.as_view(),name='user_profile'),
-    path(route='user-new-password/',view=AdminUserNewPasswordView.as_view(),name='user_new_password')
+    path(route='user-set-new-password/',view=AdminUserSetNewPasswordView.as_view(),name='user_set_new_password')
 ]
