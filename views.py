@@ -102,10 +102,13 @@ class AdminUserProfileView(SecureView, FormView):
     form_class = UserCreationForm
     success_url = reverse_lazy('users:admin_home')
     
-    def get_context_data(self, **kwargs):
+    def get_initial(self):
         init_data = build_init_data(self.request.user)
-        user_forms = split_forms(UserCreationForm(initial=init_data))
+        return init_data
+    
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        user_forms = split_forms(context['form'])
         context['active_page'] = 'user_settings'
         context['profile_form'] = user_forms.get('profile_form')
         return context
