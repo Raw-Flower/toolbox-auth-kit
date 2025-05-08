@@ -26,7 +26,7 @@ def getMappingValuesByModel(clean_data,model_fields):
 
 def set_instance_values(instance,values2add):
     for key, value in values2add.items():
-        setattr(instance, key, value)
+        setattr(instance,key,value)
     return instance
 
 def build_init_data(user_instance):
