@@ -1,7 +1,7 @@
-# 🧰 Toolbox App
+# 🧰 Toolbox Project - Users APP
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
-![Django](https://img.shields.io/badge/Django-4.x-green.svg)
+![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)
+![Django](https://img.shields.io/badge/Django-5.x-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 > A professional Django application that centralizes essential tools for registered users. Focused on user experience, security, modularity, and strict adherence to Django principles such as DRY (Don't Repeat Yourself).
