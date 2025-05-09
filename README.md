@@ -74,7 +74,7 @@ templates/users/
 
 ## 🤝 Credits
 
-Thanks for following the development of Toolbox App on GitHub. Contributions and feedback are welcome to continue improving and scaling the platform.
+Thanks for following the development of Toolbox project on GitHub. Contributions and feedback are welcome to continue improving and scaling the platform.
 
 ---
 
