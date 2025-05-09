@@ -2,12 +2,12 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views.generic import TemplateView, FormView
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from .forms import UserCreationForm
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from .forms import UserCreationForm, PasswordResetCustomForm
 from .utils import split_forms, saveModelsInfo, build_init_data, updateModelsInfo
 from .mixins import NeverBrowserCache, SecureView
 
-# Create your views here.
+# CORE
 class HomeView(NeverBrowserCache, TemplateView):
     template_name = 'users/core/index.html'
     
@@ -46,6 +46,9 @@ class UserCreationView(FormView):
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
     
+    
+    
+# AUTH  
 class CustomLoginView(NeverBrowserCache, LoginView):
     template_name='users/auth/login.html'
     success_url = reverse_lazy('users:admin_home')
@@ -58,7 +61,6 @@ class CustomLoginView(NeverBrowserCache, LoginView):
     
     def form_invalid(self, form):
         messages.error(request=self.request, message="Your username and password didn't match. Please try again.")
-        print(form)
         return super().form_invalid(form)
 
 class CustomLogoutView(SecureView, LogoutView):
@@ -69,6 +71,27 @@ class CustomLogoutView(SecureView, LogoutView):
         messages.success(request=self.request, message="You have been logout successfully.")
         return super().post(request, *args, **kwargs)
 
+
+
+# PASSWORD RECOVERY
+class PasswordResetCustomView(PasswordResetView):
+    template_name = 'users/core/password_recovery_request.html'
+    success_url = reverse_lazy("users:password_recovery_request_done")
+    email_template_name = 'users/core/password_recovery_email.html'
+    form_class = PasswordResetCustomForm
+    
+class PasswordResetDoneCustomView(PasswordResetDoneView):
+    template_name = 'users/core/password_recovery_request_done.html'
+    
+class PasswordResetConfirmCustomView(PasswordResetConfirmView):
+    template_name = 'users/core/password_recovery_form.html'
+    success_url = reverse_lazy("users:password_reset_done")
+    
+class PasswordResetCompleteCustomView(PasswordResetCompleteView):
+    template_name = 'users/core/password_recovery_done.html'
+
+
+# ADMIN SITE
 class AdminIndexView(SecureView, TemplateView):
     template_name = 'users/admin/index.html'
     login_url = reverse_lazy('users:login')
