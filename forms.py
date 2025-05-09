@@ -4,6 +4,7 @@ from django.core.validators import MaxLengthValidator,MinLengthValidator,EmailVa
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import  PasswordResetForm
 import re
 
 def checkPasswordNumber(value):
@@ -248,3 +249,17 @@ class UserCreationForm(forms.Form):
                     )
         return username2check
     
+class PasswordResetCustomForm(PasswordResetForm):
+    
+    def get_users(self, email):
+        print("EMAIL A VERIFICAR:", email)
+        return super().get_users(email) 
+    
+    def clean_email(self):
+        email2check = self.cleaned_data.get('email')
+        if not (User.objects.filter(email=email2check).exists()):
+            raise ValidationError(
+                message=_("Email not found in our database, please check and try again."),
+                code='email_not_found'
+            )
+        return email2check
