@@ -174,3 +174,8 @@ class AdminUserSetNewPasswordView(SecureView, PasswordChangeView):
     def form_invalid(self, form):
         messages.error(request=self.request, message='Your data contains some errors. Please check and try again.')
         return self.render_to_response(self.get_context_data(form=form))
+    
+
+'''
+Just a comment to check
+'''
