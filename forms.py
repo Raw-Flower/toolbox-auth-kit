@@ -252,7 +252,6 @@ class UserCreationForm(forms.Form):
 class PasswordResetCustomForm(PasswordResetForm):
     
     def get_users(self, email):
-        print("EMAIL A VERIFICAR:", email)
         return super().get_users(email) 
     
     def clean_email(self):
