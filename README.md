@@ -70,6 +70,71 @@ templates/users/
     └── messages.html
 ```
 
+## 🔧 Important Configuration Steps
+
+Before testing the full functionality of the Users App, make sure to follow these **critical setup steps**:
+
+---
+
+### ⚙️ 1. Django Settings – Login Configuration
+
+In your `settings.py`, define the following redirect routes for login, logout, and default user navigation:
+
+```python
+# LOGIN CONFIG
+LOGIN_REDIRECT_URL = 'users:admin_home'
+LOGIN_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'users:home'
+```
+
+These ensure users are properly redirected during authentication workflows.
+
+---
+
+### 📩 2. Email Configuration – Console Output
+
+To simulate password recovery and email-based flows in development, enable Django’s console email backend:
+
+```python
+# EMAIL CONFIGURATION
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+```
+
+📬 All password reset and email notifications will now print directly to your terminal during development.
+
+---
+
+### 🧩 3. Custom Template Tag – Form Validation Class
+
+You must add this **custom template tag** to enhance form field rendering with Bootstrap validation classes.
+
+```python
+from django import template
+
+register = template.Library()
+
+@register.filter(name='setValidationClass')
+def setValidationClass(input):
+    bootstrap_class = ''
+    if (input.data != None) and (input.data != []):
+        if input.errors:
+            bootstrap_class = 'is-invalid'
+        else:
+            bootstrap_class = 'is-valid'
+    return input.as_widget(attrs={'class': 'form-control ' + bootstrap_class})
+```
+
+📝 **Important**:  
+By default configuration on Toolbox project the template tags file is call `custom_tags.py`, be sure to update all references to it, including:
+
+- `templates/users/includes/form_render.html`
+
+---
+
+✅ With these steps configured, your application will:
+- Provide correct login/logout redirects
+- Dynamically apply form validation styling using Bootstrap
+
 ---
 
 ## 🤝 Credits
