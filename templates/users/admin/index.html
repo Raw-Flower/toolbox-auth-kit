@@ -1,12 +1,12 @@
-{% extends 'users/base/admin_base.html' %}
-{% block title %}Dashboard{% endblock title %}
-{% block body %}
-{% include 'users/includes/messages.html'%}
+{% extends 'users/base/main_admin.html' %}
+{% block subtitle %}Home{% endblock subtitle %}
+{% block content %}
+{% include 'core/includes/messages.html'%}
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Hello {{request.user.first_name}}, welcome back!</h5>
-        <p class="card-text">Look around all the admin funtionalies and please have a try, thank you.</p>
+        <p class="card-text">Please test all the admin features.</p>
     </div>
 </div>
-{% endblock body %}
+{% endblock content %}
 

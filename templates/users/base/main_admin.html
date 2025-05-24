@@ -1,0 +1,22 @@
+{% extends 'core/base/main_base.html' %}
+{% block title %}
+    Dashboard - {% block subtitle %}{% endblock subtitle %}
+{% endblock title %}
+{% block body %}
+    <div class='row'>
+        <div class='col-3'>
+            <div class="card">
+                <div class="card-header">Dashboard menu</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href='{% url "users:admin_home" %}' class="card-link">Home</a> {% if active_page == 'admin_home' %} <span class="badge bg-primary">You're here!</span>{% endif %} </li>
+                    <li class="list-group-item"><a href='{% url "users:user_settings" %}' class="card-link">User settings</a> {% if active_page == 'user_settings' %} <span class="badge bg-primary">You're here!</span>{% endif %}</li>
+                    <li class="list-group-item"><a href='{% url "users:admin_confirm_logout" %}' class="card-link">log out</a> {% if active_page == 'confirm_logout' %} <span class="badge bg-primary">You're here!</span>{% endif %}</li>
+                </ul>
+            </div>
+        </div>
+        <div class='col-9'>
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+{% endblock body %}
