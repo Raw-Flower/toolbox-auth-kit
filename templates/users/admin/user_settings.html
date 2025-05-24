@@ -1,21 +1,21 @@
-{% extends 'users/base/admin_base.html' %}
-{% block title %}User settings{% endblock title %}
-{% block body %}
-<div class="card">
-    <div class="card-body">
-        <p class="card-text">Here you will find the basic user options for <span class='fst-italic fw-bold text-decoration-underline'>update your profile information</span> or <span class='fst-italic fw-bold text-decoration-underline'>set a new password</span>.</p>
-        <p class='card-text'>
-            <ul>
-                <li><span class='fw-bold'>Profile details:</span> Basically display the same form from the register page(username & password not include) and you are able to update the information.</li>
-                <li><span class='fw-bold'>Set new password:</span> Will update all you session information after succesfully set the new password. You will require your old password.</li>
-            </ul>
-        </p>
+{% extends 'users/base/main_admin.html' %}
+{% block subtitle %}User settings{% endblock subtitle %}
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text">Here you will find the basic user options for <span class='fst-italic fw-bold text-decoration-underline'>update your profile information</span> or <span class='fst-italic fw-bold text-decoration-underline'>set a new password</span>.</p>
+            <p class='card-text'>
+                <ul>
+                    <li><span class='fw-bold'>Profile details:</span> Basically display the same form from the register page(username & password not include) and you are able to update the information.</li>
+                    <li><span class='fw-bold'>Set new password:</span> Will update all you session information after succesfully set the new password. You will require your old password.</li>
+                </ul>
+            </p>
+        </div>
     </div>
-</div>
 
-<div class="list-group mt-3">
-    <a href='{% url "users:user_profile" %}' class="list-group-item list-group-item-action fs-5"><span class='text-dark fw-bold'>Profile details</span></a>
-    <a href='{% url "users:user_set_new_password" %}' class="list-group-item list-group-item-action fs-5"><span class='text-dark fw-bold'>Set new password</span></a>
-</div>
-{% endblock body %}
+    <div class="list-group mt-3">
+        <a href='{% url "users:user_profile" %}' class="list-group-item list-group-item-action fs-5"><span class='text-dark fw-bold'>Profile details</span></a>
+        <a href='{% url "users:user_set_new_password" %}' class="list-group-item list-group-item-action fs-5"><span class='text-dark fw-bold'>Set new password</span></a>
+    </div>
+{% endblock content %}
 

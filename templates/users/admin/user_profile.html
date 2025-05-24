@@ -1,14 +1,14 @@
-{% extends 'users/base/admin_base.html' %}
+{% extends 'users/base/main_admin.html' %}
 {% load custom_tags %}
-{% block title %}User profile{% endblock title %}
-{% block body %}
-{% include 'users/includes/messages.html'%}
+{% block subtitle %}User profile{% endblock subtitle %}
+{% block content %}
+{% include 'core/includes/messages.html'%}
 <div class="card">
     <div class="card-body">
         <form method='post' novalidate>
             {% if profile_form %}
                 <div class="user_profile mt-2">
-                    {% include 'users/includes/form_render.html' with form=profile_form title='Profile information' only %}
+                    {% include 'core/includes/form_render.html' with form=profile_form title='Profile information' only %}
                 </div>
                 <div class='mt-2'>
                     {% csrf_token %}
@@ -22,5 +22,5 @@
         </div>
     </div>
 </div>
-{% endblock body %}
+{% endblock content %}
 

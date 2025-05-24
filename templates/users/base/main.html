@@ -1,0 +1,22 @@
+{% extends 'core/base/main_base.html' %}
+{% block title %}
+Auth kit - {% block subtitle %}{% endblock subtitle %}
+{% endblock title %}
+{% block body %}
+    <div class='row'>
+        <div class='col-3'>
+            <div class="card">
+                <div class="card-header">Main menu</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href='{% url "users:home" %}' class="card-link">Home</a>{% if active_page == 'home' %} <span class="badge bg-primary">You're here!</span>{% endif %}</li>
+                    <li class="list-group-item"><a href='{% url "users:user_creation" %}' class="card-link">Register</a>{% if active_page == 'user_creation' %} <span class="badge bg-primary">You're here!</span>{% endif %}</li>
+                </ul>
+                <div class="card-footer"><span class='fw-bold'>Already have an account? </span><a href='{% url "users:login" %}' class="card-link">Click here!</a></div>
+            </div>
+        </div>
+        <div class='col-9'>
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+{% endblock body %}

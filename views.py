@@ -9,7 +9,7 @@ from .mixins import NeverBrowserCache, SecureView
 
 # CORE
 class HomeView(NeverBrowserCache, TemplateView):
-    template_name = 'users/core/index.html'
+    template_name = 'users/templates/index.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -17,7 +17,7 @@ class HomeView(NeverBrowserCache, TemplateView):
         return context
     
 class UserCreationView(FormView):
-    template_name = 'users/core/users_create.html'
+    template_name = 'users/templates/users_create.html'
     form_class = UserCreationForm
     success_url = reverse_lazy('users:home')
     
@@ -75,20 +75,21 @@ class CustomLogoutView(SecureView, LogoutView):
 
 # PASSWORD RECOVERY
 class PasswordResetCustomView(PasswordResetView):
-    template_name = 'users/core/password_recovery_request.html'
+    template_name = 'users/templates/password_recovery_request.html'
     success_url = reverse_lazy("users:password_recovery_request_done")
-    email_template_name = 'users/core/password_recovery_email.html'
+    email_template_name = 'users/templates/password_recovery_email.html'
     form_class = PasswordResetCustomForm
     
 class PasswordResetDoneCustomView(PasswordResetDoneView):
-    template_name = 'users/core/password_recovery_request_done.html'
+    template_name = 'users/templates/password_recovery_request_done.html'
     
 class PasswordResetConfirmCustomView(PasswordResetConfirmView):
-    template_name = 'users/core/password_recovery_form.html'
+    template_name = 'users/templates/password_recovery_form.html'
     success_url = reverse_lazy("users:password_reset_done")
     
 class PasswordResetCompleteCustomView(PasswordResetCompleteView):
-    template_name = 'users/core/password_recovery_done.html'
+    template_name = 'users/templates/password_recovery_done.html'
+
 
 
 # ADMIN SITE

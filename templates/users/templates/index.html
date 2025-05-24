@@ -1,0 +1,17 @@
+{% extends 'users/base/main.html' %}
+{% block subtitle %}Home{% endblock subtitle %}
+{% block content %}
+    {% include 'core/includes/messages.html'%}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Welcome!</h5>
+            <p class="card-text">
+            Django-ready auth system with register, login, password reset, and profile editing via combined model forms.<br>
+            Built with DRY principles and reusable mixins for fast integration.
+            </p>
+            <p class="card-text"><span class='fw-bold'>Current active session: </span><span class='fw-italic'>{{request.user}}</span></p>
+            <a href='{% url "users:user_creation" %}' class="btn btn-outline-secondary"><i class="bi bi-person-add"></i> Register</a>
+        </div>
+    </div>
+{% endblock content %}
+

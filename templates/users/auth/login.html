@@ -1,26 +1,26 @@
-{% extends 'users/base/standard_base.html' %}
-{% block title %}Sign in{% endblock title %}
-{% block content %}
-<div class="row">
-    <div class="col-12 mt-5">
-        <div class="card">
-            <div class="card-body">
-                <form method="POST" novalidate>
-                    {% if form %}
-                        {% include 'users/includes/messages.html' %}
-                        {% include 'users/includes/form_render.html' with form=form title='Login credentials' only %}
-                        {% csrf_token %}
-                        <div class="d-grid p-2">
-                        <p><a href='{% url "users:password_recovery_request" %}' class='fst-italic'>Forgot password?</a></p>
-                            <button class="btn btn-light" type="submit" style='background-color:#e3f2fd'>Log in</button>
-                        </div>
-                    {% endif %}
-                </form>
-                <div class="text-center mt-2">
-                    <p>Not an account yet? <a href='{% url "users:user_creation" %}'>Create one</a></p>
+{% extends 'core/base/main_base.html' %}
+{% block title %}Auth kit - Sign in{% endblock title %}
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" novalidate>
+                        {% if form %}
+                            {% include 'core/includes/messages.html' %}
+                            {% include 'core/includes/form_render.html' with form=form title='Login credentials' only %}
+                            {% csrf_token %}
+                            <div class="d-grid p-2">
+                            <p><a href='{% url "users:password_recovery_request" %}' class='fst-italic'>Forgot password?</a></p>
+                                <button class="btn btn-light" type="submit" style='background-color:#e3f2fd'>Log in</button>
+                            </div>
+                        {% endif %}
+                    </form>
+                    <div class="text-center">
+                        <p>Not an account yet? <a href='{% url "users:user_creation" %}'>Register here!</a></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock content %}
+{% endblock body %}
